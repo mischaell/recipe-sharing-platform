@@ -2,7 +2,7 @@ import { type NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   try {
     // Check if environment variables are set
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
@@ -65,7 +65,7 @@ export async function proxy(request: NextRequest) {
     return supabaseResponse
   } catch (error) {
     // Log error but don't crash - allow request to proceed
-    console.error('Proxy error:', error)
+    console.error('Middleware error:', error)
     return NextResponse.next({ request })
   }
 }
