@@ -1,17 +1,7 @@
 import Link from 'next/link'
 import { signIn } from '@/app/lib/auth/actions'
-import { getUser } from '@/app/lib/auth/get-user'
-import { redirect } from 'next/navigation'
 
-export default async function Home() {
-  // Check if user is already signed in
-  const user = await getUser()
-  
-  // If signed in, redirect to dashboard
-  if (user) {
-    redirect('/dashboard')
-  }
-
+export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -20,14 +10,18 @@ export default async function Home() {
             <span className="text-2xl">🍳</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Welcome to RecipeShare
+            Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Share your favorite recipes and discover new culinary adventures
+            Or{' '}
+            <Link
+              href="/signup"
+              className="font-medium text-orange-600 hover:text-orange-500"
+            >
+              create a new account
+            </Link>
           </p>
         </div>
-
-        {/* Sign In Form */}
         <form action={signIn} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
@@ -80,28 +74,10 @@ export default async function Home() {
             </button>
           </div>
         </form>
-
-        {/* Sign Up Section */}
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link
-              href="/signup"
-              className="font-medium text-orange-600 hover:text-orange-500"
-            >
-              Create a new account
-            </Link>
-          </p>
-          <div className="mt-4">
-            <Link
-              href="/signup"
-              className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-orange-600 shadow-sm ring-1 ring-inset ring-orange-300 hover:bg-orange-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
-            >
-              Start Creating
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   )
 }
+
+
+
