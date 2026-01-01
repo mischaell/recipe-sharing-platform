@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
             Enter your email address and we'll send you a link to reset your password.
           </p>
         </div>
-        <form action={resetPassword} className="mt-8 space-y-6">
+        <form action={resetPassword as any} className="mt-8 space-y-6">
           <div>
             <label htmlFor="email" className="sr-only">
               Email address
@@ -54,6 +54,7 @@ export default function ResetPasswordPage() {
     </div>
   )
 }
+
 
 
 

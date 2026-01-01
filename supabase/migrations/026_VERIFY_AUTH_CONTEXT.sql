@@ -18,3 +18,4 @@ SELECT
 -- This will show us if the policy works when we're authenticated
 -- (You'll need to be logged in to Supabase dashboard for this to work)
 
+

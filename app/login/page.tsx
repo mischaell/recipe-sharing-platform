@@ -22,7 +22,7 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-        <form action={signIn} className="mt-8 space-y-6">
+        <form action={signIn as any} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <label htmlFor="email" className="sr-only">
@@ -78,6 +78,7 @@ export default function LoginPage() {
     </div>
   )
 }
+
 
 
 

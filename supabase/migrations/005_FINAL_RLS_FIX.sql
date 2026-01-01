@@ -97,3 +97,4 @@ CREATE POLICY "comment_likes_delete_policy"
   ON comment_likes FOR DELETE
   USING (auth.uid() = user_id);
 
+

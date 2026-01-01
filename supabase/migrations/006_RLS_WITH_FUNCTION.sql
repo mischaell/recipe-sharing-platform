@@ -100,3 +100,4 @@ CREATE POLICY "comment_likes_delete"
   ON comment_likes FOR DELETE
   USING (get_current_user_id() = user_id);
 
+

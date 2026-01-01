@@ -120,11 +120,13 @@ export default function RecipeList({
 
         // Search in author name
         const authorId = recipe.user_id || recipe.author_id
-        const author = profilesMap[authorId]
-        if (author) {
-          const authorName = author.display_name || author.full_name || author.user_name || ''
-          if (authorName.toLowerCase().includes(query)) {
-            return true
+        if (authorId) {
+          const author = profilesMap[authorId]
+          if (author) {
+            const authorName = author.display_name || author.full_name || author.user_name || ''
+            if (authorName.toLowerCase().includes(query)) {
+              return true
+            }
           }
         }
 
@@ -218,7 +220,7 @@ export default function RecipeList({
           {filteredRecipes.map((recipe) => {
             // Get author info from profiles map
             const authorId = recipe.user_id || recipe.author_id
-            const author = profilesMap[authorId]
+            const author = authorId ? profilesMap[authorId] : undefined
             const authorName = author?.display_name || author?.full_name || author?.user_name || 'Unknown'
 
             // Map recipe data to RecipeCard props

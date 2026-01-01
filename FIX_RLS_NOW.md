@@ -36,3 +36,4 @@ This bypasses RLS but is insecure.
 2. Whether Step 2 worked
 3. The exact error message you're seeing
 
+

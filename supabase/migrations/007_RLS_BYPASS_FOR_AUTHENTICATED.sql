@@ -112,3 +112,4 @@ CREATE POLICY "comment_likes_delete_own"
     AND EXISTS (SELECT 1 FROM profiles WHERE id = user_id)
   );
 
+

@@ -117,3 +117,4 @@ CREATE POLICY "comment_likes_delete"
     (auth.role() = 'authenticated' AND EXISTS (SELECT 1 FROM profiles WHERE id = user_id))
   );
 
+

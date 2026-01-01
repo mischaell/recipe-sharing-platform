@@ -28,7 +28,7 @@ export default async function Home() {
         </div>
 
         {/* Sign In Form */}
-        <form action={signIn} className="mt-8 space-y-6">
+        <form action={signIn as any} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <label htmlFor="email" className="sr-only">

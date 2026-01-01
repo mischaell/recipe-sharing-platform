@@ -29,3 +29,4 @@ FROM pg_policy pol
 JOIN pg_class pc ON pol.polrelid = pc.oid
 WHERE pc.relname = 'comments' AND pol.polcmd = 'i';
 
+

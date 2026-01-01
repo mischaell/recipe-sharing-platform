@@ -33,3 +33,4 @@
 - ✅ Creates new secure policies using `auth.role() = 'authenticated'`
 - ✅ Verifies user_id exists in profiles table
 
+

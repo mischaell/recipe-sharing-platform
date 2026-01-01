@@ -52,7 +52,7 @@ export default function EditRecipeForm({
         </div>
       )}
 
-      {state?.success && (
+      {state && !state.error && (
         <div className="rounded-md bg-green-50 p-4">
           <div className="flex">
             <div className="ml-3">

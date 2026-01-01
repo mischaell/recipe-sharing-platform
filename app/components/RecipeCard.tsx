@@ -9,7 +9,7 @@ interface RecipeCardProps {
   title: string;
   description: string;
   author: string;
-  authorId: string;
+  authorId?: string;
   imageUrl?: string;
   prepTime: number;
   cookTime: number;
@@ -39,7 +39,9 @@ export default function RecipeCard({
   const handleAuthorClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    router.push(`/u/${authorId}`);
+    if (authorId) {
+      router.push(`/u/${authorId}`);
+    }
   };
 
   return (
@@ -97,12 +99,18 @@ export default function RecipeCard({
             </div>
           )}
           <div className="pt-2">
-            <button
-              onClick={handleAuthorClick}
-              className="text-xs font-medium text-gray-600 hover:text-orange-600"
-            >
-              By {author}
-            </button>
+            {authorId ? (
+              <button
+                onClick={handleAuthorClick}
+                className="text-xs font-medium text-gray-600 hover:text-orange-600"
+              >
+                By {author}
+              </button>
+            ) : (
+              <span className="text-xs font-medium text-gray-600">
+                By {author}
+              </span>
+            )}
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ export default function SignUpPage() {
             </Link>
           </p>
         </div>
-        <form action={signUp} className="mt-8 space-y-6">
+        <form action={signUp as any} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <label htmlFor="fullName" className="sr-only">
@@ -96,6 +96,7 @@ export default function SignUpPage() {
     </div>
   )
 }
+
 
 
 

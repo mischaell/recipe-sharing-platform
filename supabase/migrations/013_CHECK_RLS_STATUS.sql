@@ -31,3 +31,4 @@ SELECT
   auth.role() as current_role,
   auth.uid() as current_uid;
 
+

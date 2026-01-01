@@ -27,7 +27,7 @@ export default async function EditProfileContent() {
     <div className="mx-auto max-w-2xl">
       <h1 className="mb-8 text-3xl font-bold text-gray-900">Edit Profile</h1>
 
-      <form action={updateProfile} className="space-y-6 rounded-lg bg-white p-6 shadow-sm">
+      <form action={updateProfile as any} className="space-y-6 rounded-lg bg-white p-6 shadow-sm">
         <div>
           <label htmlFor="display_name" className="block text-sm font-medium text-gray-700">
             {(profile as any)?.display_name !== undefined ? 'Display Name' : 
@@ -117,4 +117,5 @@ export default async function EditProfileContent() {
     </div>
   )
 }
+
 

@@ -70,3 +70,4 @@ Or if there's an error:
 2. Try posting a comment in your app
 3. Watch the terminal - you should see logs appear immediately
 
+

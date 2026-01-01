@@ -28,3 +28,4 @@ WHERE tablename = 'comments';
 -- If it works, RLS was the problem
 -- If it still fails, the problem is elsewhere
 
+
