@@ -5,7 +5,13 @@ import { redirect } from 'next/navigation'
 
 export default async function Home() {
   // Check if user is already signed in
-  const user = await getUser()
+  let user = null
+  try {
+    user = await getUser()
+  } catch (error) {
+    console.error('Error getting user:', error)
+    // Continue to show login page if there's an error
+  }
   
   // If signed in, redirect to dashboard
   if (user) {

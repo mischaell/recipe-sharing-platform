@@ -2,11 +2,18 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export async function createClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY')
+  }
+
   const cookieStore = await cookies()
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -29,11 +36,16 @@ export async function createClient() {
 
   // Ensure session is refreshed and available for RLS
   // This is critical for RLS policies to work
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  // If we have a session, refresh it to ensure it's valid
-  if (session) {
-    await supabase.auth.getUser()
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    
+    // If we have a session, refresh it to ensure it's valid
+    if (session) {
+      await supabase.auth.getUser()
+    }
+  } catch (error) {
+    // If session refresh fails, log but don't crash
+    console.error('Error refreshing session:', error)
   }
 
   return supabase
