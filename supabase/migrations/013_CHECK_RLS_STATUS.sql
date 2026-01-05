@@ -32,3 +32,4 @@ SELECT
   auth.uid() as current_uid;
 
 
+

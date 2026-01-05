@@ -82,3 +82,4 @@ CREATE POLICY "Users can delete their own comment likes"
   USING (auth.uid() = user_id);
 
 
+

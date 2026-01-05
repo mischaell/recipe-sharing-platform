@@ -21,3 +21,4 @@ ALTER TABLE comment_likes ENABLE ROW LEVEL SECURITY;
 */
 
 
+

@@ -37,3 +37,4 @@ This bypasses RLS but is insecure.
 3. The exact error message you're seeing
 
 
+

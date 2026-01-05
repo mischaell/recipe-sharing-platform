@@ -11,13 +11,25 @@ export default function AuthButtons() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const supabase = createClient()
+    let supabase
+    try {
+      supabase = createClient()
+    } catch (error) {
+      console.error('Error creating Supabase client:', error)
+      setLoading(false)
+      return
+    }
 
     // Get initial session
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
-      setLoading(false)
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        setUser(session?.user ?? null)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error checking session:', error)
+        setLoading(false)
+      }
     }
 
     checkUser()
@@ -28,14 +40,20 @@ export default function AuthButtons() {
     }, 500)
 
     // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-      // Force a router refresh to update server components
-      router.refresh()
-    })
+    let subscription: { unsubscribe: () => void } | undefined
+    try {
+      const {
+        data: { subscription: sub },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null)
+        setLoading(false)
+        // Force a router refresh to update server components
+        router.refresh()
+      })
+      subscription = sub
+    } catch (error) {
+      console.error('Error setting up auth state listener:', error)
+    }
 
     // Re-check session on window focus (helps after redirects)
     const handleFocus = () => {
@@ -45,16 +63,25 @@ export default function AuthButtons() {
 
     return () => {
       clearTimeout(timeoutId)
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
       window.removeEventListener('focus', handleFocus)
     }
   }, [router])
 
   const handleSignOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push('/')
-    router.refresh()
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.push('/')
+      router.refresh()
+    } catch (error) {
+      console.error('Error signing out:', error)
+      // Still try to navigate even if sign out fails
+      router.push('/')
+      router.refresh()
+    }
   }
 
   if (loading) {

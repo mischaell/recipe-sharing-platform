@@ -17,3 +17,4 @@ WHERE tablename = 'comments';
 -- If it still fails, the problem is elsewhere (not RLS)
 
 
+
