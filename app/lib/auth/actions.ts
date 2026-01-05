@@ -46,7 +46,7 @@ export async function signUp(formData: FormData) {
   }
 }
 
-export async function signIn(formData: FormData) {
+export async function signIn(prevState: any, formData: FormData) {
   try {
     const supabase = await createClient()
 
@@ -67,13 +67,18 @@ export async function signIn(formData: FormData) {
     }
 
     if (data.user) {
-      // Wait a moment for session cookies to be set
-      await new Promise(resolve => setTimeout(resolve, 100))
+      // Wait for session cookies to be set
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      // Revalidate all paths to ensure fresh data
       revalidatePath('/', 'layout')
-      redirect('/dashboard')
+      revalidatePath('/dashboard', 'layout')
+      
+      // Return success - client will handle redirect
+      return { success: true }
     }
 
-    return { success: true }
+    return { error: 'Sign in failed. Please try again.' }
   } catch (error: any) {
     console.error('Error in signIn:', error)
     return { error: error?.message || 'An error occurred during sign in. Please check your environment variables.' }

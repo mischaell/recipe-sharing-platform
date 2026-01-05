@@ -1,7 +1,22 @@
+'use client'
+
 import Link from 'next/link'
 import { signIn } from '@/app/lib/auth/actions'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
+  const router = useRouter()
+  const [state, formAction] = useActionState(signIn, null)
+
+  // Redirect on successful login
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/dashboard')
+      router.refresh()
+    }
+  }, [state, router])
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -22,7 +37,21 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-        <form action={signIn as any} className="mt-8 space-y-6">
+        {state?.error && (
+          <div className="rounded-md bg-red-50 p-4">
+            <div className="flex">
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">
+                  Sign in failed
+                </h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <p>{state.error}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        <form action={formAction} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <label htmlFor="email" className="sr-only">
